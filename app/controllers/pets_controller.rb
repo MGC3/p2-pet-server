@@ -4,7 +4,7 @@ class PetsController < ProtectedController
   # GET /pets
   def index
     # might need to change this to users pets only
-    @pets = Pet.all
+    @pets = current_user.pets.all
 
     render json: @pets
   end
