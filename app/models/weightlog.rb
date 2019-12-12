@@ -1,0 +1,2 @@
+class Weightlog < ApplicationRecord
+end
