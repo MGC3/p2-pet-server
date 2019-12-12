@@ -4,7 +4,7 @@ class WeightlogsController < ProtectedController
   # GET /weightlogs
   def index
     # TODO: check if OK
-    @weightlogs = current_pet.weightlogs.all
+    @weightlogs = current_user.pets.find(params[:pet_id]).weightlogs.all
     #@weightlogs = Weightlog.all
 
     render json: @weightlogs
@@ -18,8 +18,8 @@ class WeightlogsController < ProtectedController
   # POST /weightlogs
   def create
     # TODO: check if OK
-    @weightlog = current_pet.weightlogs.build(weightlog_params)
-    #@weightlog = Weightlog.new(weightlog_params)
+    @weightlog = current_user.pets.find(weightlog_params[:pet_id]).weightlogs.build(weightlog_params)
+    # @weightlog = current_user.weightlogs.build(weightlog_params)
 
     if @weightlog.save
       render json: @weightlog, status: :created, location: @weightlog
@@ -46,7 +46,7 @@ class WeightlogsController < ProtectedController
     # Use callbacks to share common setup or constraints between actions.
     def set_weightlog
       # TODO: changed from Weightlog to current_pet, see if ok
-      @weightlog = current_pet.weightlogs.find(params[:id])
+      @weightlog = current_user.pets.find(params[:pet_id]).weightlogs.find(params[:id])
       #@weightlog = Weightlog.find(params[:id])
     end
 
