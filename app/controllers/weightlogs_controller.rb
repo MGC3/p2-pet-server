@@ -1,9 +1,11 @@
-class WeightlogsController < ApplicationController
+class WeightlogsController < ProtectedController
   before_action :set_weightlog, only: [:show, :update, :destroy]
 
   # GET /weightlogs
   def index
-    @weightlogs = Weightlog.all
+    # TODO: check if OK
+    @weightlogs = current_pet.weightlogs.all
+    #@weightlogs = Weightlog.all
 
     render json: @weightlogs
   end
@@ -15,7 +17,9 @@ class WeightlogsController < ApplicationController
 
   # POST /weightlogs
   def create
-    @weightlog = Weightlog.new(weightlog_params)
+    # TODO: check if OK
+    @weightlog = current_pet.weightlogs.build(weightlog_params)
+    #@weightlog = Weightlog.new(weightlog_params)
 
     if @weightlog.save
       render json: @weightlog, status: :created, location: @weightlog
@@ -41,11 +45,13 @@ class WeightlogsController < ApplicationController
   private
     # Use callbacks to share common setup or constraints between actions.
     def set_weightlog
-      @weightlog = Weightlog.find(params[:id])
+      # TODO: changed from Weightlog to current_pet, see if ok
+      @weightlog = current_pet.weightlogs.find(params[:id])
+      #@weightlog = Weightlog.find(params[:id])
     end
 
     # Only allow a trusted parameter "white list" through.
     def weightlog_params
-      params.require(:weightlog).permit(:weight, :date)
+      params.require(:weightlog).permit(:weight, :date, :pet_id)
     end
 end
