@@ -1,5 +1,5 @@
 class WeightlogsController < ProtectedController
-  before_action :set_weightlog, only: [:show, :update, :destroy]
+  before_action :set_weightlog, only: [:show, :destroy]
 
   # GET /weightlogs
   def index
@@ -28,6 +28,8 @@ class WeightlogsController < ProtectedController
 
   # PATCH/PUT /weightlogs/1
   def update
+    @weightlog = current_user.pets.find(weightlog_params[:pet_id]).weightlogs.find(params[:id])
+
     if @weightlog.update(weightlog_params)
       render json: @weightlog
     else

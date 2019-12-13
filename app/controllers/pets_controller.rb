@@ -13,7 +13,7 @@ class PetsController < ProtectedController
   def show
     render json: @pet
   end
-
+  
   # POST /pets
   def create
     @pet = current_user.pets.build(pet_params)
