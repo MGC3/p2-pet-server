@@ -5,8 +5,6 @@ class WeightlogsController < ProtectedController
   def index
     # TODO: check if OK
     @weightlogs = current_user.pets.find(params[:pet_id]).weightlogs.all
-    #@weightlogs = Weightlog.all
-
     render json: @weightlogs
   end
 
